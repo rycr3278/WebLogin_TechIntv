@@ -1,27 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+<!DOCTYPE html> <!-- Defines the document type and version of HTML -->
+<html lang="en"> <!-- Defines the language of the document -->
 
-<link rel="stylesheet" href="/style.css">
+<head> <!-- Contains meta information about the document -->
+    <meta charset="UTF-8"> <!-- Defines the character set for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes the webpage responsive on different devices -->
+    <title>Login</title> <!-- Defines the title of the document -->
+
+    <link rel="stylesheet" href="/style.css"> <!-- Links to the CSS file for styling -->
 
 </head>
-<body>
-    <div class="form-container">
-        <h2>Login</h2>
-        <form action="/login" method="POST">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Enter your email" required autocomplete="off">
+
+<body> <!-- Contains the content that will be visible to the user -->
+    <div class="form-container"> <!-- Container for the form -->
+        <h2>Login</h2> <!-- Heading -->
+        <form action="/login" method="POST"> <!-- Form that sends data to /login endpoint using POST method -->
+            <div class="form-group"> <!-- Group for each input field and its label -->
+                <label for="email">Email</label> <!-- Label for the email input field -->
+                <input type="email" name="email" id="email" placeholder="Enter your email" required autocomplete="off"> <!-- Email input field -->
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            <div class="form-group"> <!-- Group for each input field and its label -->
+                <label for="password">Password</label> <!-- Label for the password input field -->
+                <input type="password" name="password" id="password" placeholder="Enter your password" required> <!-- Password input field -->
             </div>
-            <button type="submit" class="submit-btn">Login</button>
+            <button type="submit" class="submit-btn">Login</button> <!-- Submit button for the form -->
         </form>
-        <p>Don't have an account? <a href="/signup">Signup</a></p>
+        <p>Don't have an account? <a href="/signup">Signup</a></p> <!-- Link to the signup page -->
+    </div>
 </body>     
+
 </html>

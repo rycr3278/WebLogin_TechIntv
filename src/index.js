@@ -3,36 +3,42 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const collection = require('./config');
 
+// Import required modules
+
+// Initialize express app
 const app = express();
 
-// convert data into json format
+// Middleware to parse JSON bodies
 app.use(express.json());
 
+// Middleware to parse URL-encoded bodies
 app.use(express.urlencoded({ extended: false }));
 
-
-// use EJS as the view engine
+// Set EJS as the view engine
 app.set('view engine', 'ejs');
 
-// static file
+// Serve static files from the "public" directory
 app.use(express.static("public"));
 
-
+// Route for the home page
 app.get('/', (req, res) => {
     res.render('login');
-    });
+});
 
+// Route for the signup page
 app.get('/signup', (req, res) => {
     res.render('signup');
-    });
- 
-// register user
+});
+
+// Route to handle user registration
 app.post('/signup', async (req, res) => {
     const { email, password } = req.body;
+    // Check if email and password are provided
     if (!email || !password) {
         return res.status(400).send('Both email and password are required.');
     }
     
+    // Check if user already exists
     const existingUser = await collection.findOne({email: email});
 
     if (existingUser) {
@@ -41,10 +47,10 @@ app.post('/signup', async (req, res) => {
         try {
             // Hash the password using bcrypt
             const saltRounds = 10; // number of salt round for bcrypt
-            const hashedPassword = await bcrypt.hash(password, saltRounds); // changed from data.password to password
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
             
-            // Proceed with creating the user
-            const userdata = await collection.create({ email, password: hashedPassword }); // use hashed password here
+            // Create the user
+            const userdata = await collection.create({ email, password: hashedPassword });
             console.log(userdata);
             res.send('User registered successfully');
         } catch (error) {
@@ -54,27 +60,30 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// login user
+// Route to handle user login
 app.post('/login', async (req, res) => {
     try{
         const { email, password } = req.body;
+        // Check if email and password are provided
         if (!email || !password) {
             return res.status(400).send('Both email and password are required.');
         }
 
+        // Check if user exists
         const user = await collection.findOne({ email: email });
 
         if (!user) {
             return res.status(400).send('User does not exist.');
         }
 
+        // Check if password is correct
         const isPasswordMatch = await bcrypt.compare(password, user.password);
 
         if (!isPasswordMatch) {
             return res.status(400).send('Invalid password.');
         }
 
-        // Redirect to home.js
+        // Redirect to home page
         res.render('home');
     } catch 
     (error) {
@@ -82,9 +91,8 @@ app.post('/login', async (req, res) => {
         res.status(500).send('An error occurred during login');}
     });
 
-
-// local port setup
-const PORT = process.env.PORT || 3000;
+// Set up server to listen on specified port
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
